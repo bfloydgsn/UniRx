@@ -346,16 +346,20 @@ namespace UniRx
 
     public class WWWErrorException : Exception
     {
-        public string RawErrorMessage { get; private set; }
+		public string RawErrorMessage { 
+			get {
+				return Message;
+			}
+		}
         public bool HasResponse { get; private set; }
         public System.Net.HttpStatusCode StatusCode { get; private set; }
         public System.Collections.Generic.Dictionary<string, string> ResponseHeaders { get; private set; }
         public WWW WWW { get; private set; }
 
-        public WWWErrorException(WWW www)
+		public WWWErrorException(WWW www)
+			: base(www.error)
         {
             this.WWW = www;
-            this.RawErrorMessage = www.error;
             this.ResponseHeaders = www.responseHeaders;
             this.HasResponse = false;
 
